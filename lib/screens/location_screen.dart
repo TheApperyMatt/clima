@@ -15,8 +15,7 @@ class _LocationScreenState extends State<LocationScreen> {
           image: DecorationImage(
             image: AssetImage('images/location_background.jpg'),
             fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(0.8), BlendMode.dstATop),
+            colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.8), BlendMode.dstATop),
           ),
         ),
         constraints: BoxConstraints.expand(),
@@ -74,3 +73,7 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
+
+//double temp = decodedData['main']['temp'];
+//int condition = decodedData['weather'][0]['id'];
+//String cityName = decodedData['name'];
