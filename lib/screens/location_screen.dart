@@ -1,12 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:clima/utilities/constants.dart';
 
+//create a constructor method that will set our final dynamic locationWeather property when the class is instantiated
 class LocationScreen extends StatefulWidget {
+  LocationScreen({this.locationWeather});
+
+  final locationWeather;
+
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
 
+//call the initState method which allows us to capture the state of the Super class as it gets initialised
+//we can use our widget keyword to tap into the properties and methods of the super class at this point
+//create our 3 properties, int temperature, int condition and String cityName
+//we then create our updateUI method which assigns values from our dynamic locationWeather variable to our properties
+//this method gets called in the initState method and is passed the locationWeather using the widget keyword
 class _LocationScreenState extends State<LocationScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    updateUI(widget.locationWeather);
+  }
+
+  int temperature;
+  int condition;
+  String cityName;
+
+  //we assign the double temp variable the value of the temperature from the dynamic weatherData variable
+  //this is a double at this stage and we want it to be an int
+  //we then assign the value of temp converted to an int, to our temperature property
+  void updateUI(dynamic weatherData) {
+    double temp = weatherData['main']['temp'];
+    temperature = temp.toInt();
+    condition = weatherData['weather'][0]['id'];
+    cityName = weatherData['name'];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +79,7 @@ class _LocationScreenState extends State<LocationScreen> {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      '32°',
+                      '$temperature°',
                       style: kTempTextStyle,
                     ),
                     Text(
@@ -73,7 +104,3 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
-
-//double temp = decodedData['main']['temp'];
-//int condition = decodedData['weather'][0]['id'];
-//String cityName = decodedData['name'];
