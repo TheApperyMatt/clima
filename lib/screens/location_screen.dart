@@ -1,3 +1,4 @@
+import 'package:clima/screens/city_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:clima/utilities/constants.dart';
 import 'package:clima/services/weather.dart';
@@ -66,8 +67,7 @@ class _LocationScreenState extends State<LocationScreen> {
           image: DecorationImage(
             image: AssetImage('images/location_background.jpg'),
             fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(0.8), BlendMode.dstATop),
+            colorFilter: ColorFilter.mode(Colors.white.withOpacity(0.8), BlendMode.dstATop),
           ),
         ),
         constraints: BoxConstraints.expand(),
@@ -80,6 +80,9 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
+                    //set our onPressed method to asynchronous
+                    //assign the return value from the getLocationWeather method of the WeatherModel class to a dynamic variable, weatherData
+                    //call our updateUI method once the dynamic variable has been set
                     onPressed: () async {
                       var weatherData = await weather.getLocationWeather();
                       updateUI(weatherData);
@@ -90,7 +93,30 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      //the push method of the Navigator object pushes the current context onto the new screen
+                      //it expects the current context and the destination route
+                      //we give it a new object of the MaterialPageRoute class which expects a call back for the builder property
+                      //we pass it a call back with the current context and return a new object of the destination class
+                      //the push method can return a Future<T>, so we assign the return to a dynamic variable, typedName
+                      //we make our onPressed method asynchronous so we can wait for our typedNamed variable to be set before using it
+                      //the return is coming from the pop method in the CityScreen class
+                      var typedName = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return CityScreen();
+                          },
+                        ),
+                      );
+                      //check if the city name provided by the user is null
+                      //if not, assign a dynamic variable the return value of the getCityWeather asynchronous method of the WeatherModel class
+                      //call our updateUI method and pass in our weatherData once it is assigned the return value
+                      if (typedName != null) {
+                        var weatherData = await weather.getCityWeather(typedName);
+                        updateUI(weatherData);
+                      }
+                    },
                     child: Icon(
                       Icons.location_city,
                       size: 50.0,

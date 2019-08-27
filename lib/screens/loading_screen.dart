@@ -46,7 +46,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: SpinKitFoldingCube(
+        child: SpinKitChasingDots(
           color: Colors.white,
           size: 200.0,
         ),
@@ -54,5 +54,3 @@ class _LoadingScreenState extends State<LoadingScreen> {
     );
   }
 }
-
-//https://www.youtube.com/watch?v=ZCY1L_27Ph8
